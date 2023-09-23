@@ -1,8 +1,10 @@
+import time
+from multiprocessing import Pool
 import os, random
 import cv2 as cv
 
 cashed_frames, camp_ratio, directory = {}, 4, "source"
-
+#cap = cv.Vi
 
 def dhash(image):
     resized = cv.resize(image, (17, 16))
@@ -11,7 +13,9 @@ def dhash(image):
 
 
 def init_data():
-    for key in cashed_frames.keys():
+    stat = time.time()
+    for key in os.listdir(f"{directory}"):
+        cashed_frames[key] = []
         for vid in os.listdir(f"{directory}/{key}"):
             # Коэф сжатия
             video_stream = cv.VideoCapture(f"{directory}/{key}/{vid}")
@@ -25,10 +29,10 @@ def init_data():
                     # обеспечивем контраст для изображения
                     image = cv.createCLAHE(clipLimit=3., tileGridSize=(8, 8)).apply(image)
                     cashed_frames[key].append([image, dhash(image)])
-                except():
+                except:
                     video_stream.release()
                     break
-
+    print(time.time() - stat)
 
 def gen_data_update(updated_dict, update_procent):
 
@@ -48,6 +52,6 @@ def gen_data_update(updated_dict, update_procent):
 
     return result
 
-
 init_data()
-gen_data_update(cashed_frames, 0.2)
+
+#print(cv.VideoCapture.get(7))
