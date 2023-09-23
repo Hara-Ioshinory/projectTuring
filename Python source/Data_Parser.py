@@ -1,51 +1,52 @@
-import os, numpy
+import os, random
 import cv2 as cv
-import random
 
-cashed_frames = {}
+cashed_frames, camp_ratio, directory = {}, 4, "source"
 
-def dhash(image, hashSize=16):
-    resized = cv.resize(image, (hashSize + 1, hashSize))
+
+def dhash(image):
+    resized = cv.resize(image, (17, 16))
     diff = resized[:, 1:] > resized[:, :-1]
     return sum([2 ** i for (i, v) in enumerate(diff.flatten()) if v])
 
 
 def init_data():
-    directory = "source"
-    for tag in os.listdir(directory):
-        cashed_frames[tag] = []
-    for tag in cashed_frames.keys():
-        for vid in os.listdir(f"source/{tag}"):
-            print(tag, vid)
+    for key in cashed_frames.keys():
+        for vid in os.listdir(f"{directory}/{key}"):
             # Коэф сжатия
-            camp_ratio = 4
-            video_stream = cv.VideoCapture(f"source/{tag}/{vid}")
+            video_stream = cv.VideoCapture(f"{directory}/{key}/{vid}")
             # Расчёт параметров
             h = int(video_stream.get(3) / camp_ratio)
-            w = int(video_stream.get(4) / camp_ratio)
-            offset = int((h - w) / 2)
             while True:
-                isTrue, frame = video_stream.read()
+                frame = video_stream.read()[1]
                 # обеспечивание, обрезка и сжатие
                 try:
                     image = cv.cvtColor(cv.resize(frame, (h, h)), cv.COLOR_BGR2GRAY)
                     # обеспечивем контраст для изображения
                     image = cv.createCLAHE(clipLimit=3., tileGridSize=(8, 8)).apply(image)
-                    cashed_frames[tag].append([image, dhash(image)])
-                except:
+                    cashed_frames[key].append([image, dhash(image)])
+                except():
                     video_stream.release()
-                    print("Выборка завершена")
                     break
-    for tag in cashed_frames.keys():
-        print(f"{tag}:{len(cashed_frames[tag])}")
-    print(cashed_frames)
+
 
 def gen_data_update(updated_dict, update_procent):
-    for tag in updated_dict.keys():
-        for i in range(int(len(updated_dict) * update_procent)):
-            random_tag = random.choice(updated_dict[tag])
-            print(random_tag)
-            random_vall = random.choice(cashed_frames[tag])
+
+    result = updated_dict
+
+    for key in updated_dict.keys():
+        rcs = (result[key][x][1] for x in range(len(result[key])-1))
+        for line in range(int(len(updated_dict[key]) * update_procent)):
+            i = random.randint(0, len(result[key]) - 1)
+
+            while True:
+                ri = random.randint(0, len(cashed_frames[key]) - 1)
+                rc = cashed_frames[key][ri][1]
+                if rc not in rcs:
+                    result[key][i] = cashed_frames[key][ri]
+                    break
+
+    return result
 
 
 init_data()
