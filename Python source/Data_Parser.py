@@ -1,5 +1,6 @@
 import os, numpy
 import cv2 as cv
+import random
 
 cashed_frames = {}
 
@@ -27,7 +28,7 @@ def init_data():
                 isTrue, frame = video_stream.read()
                 # обеспечивание, обрезка и сжатие
                 try:
-                    image = cv.cvtColor(cv.resize(frame, (h, w)), cv.COLOR_BGR2GRAY)[0:int(h), offset:int(h) - offset]
+                    image = cv.cvtColor(cv.resize(frame, (h, h)), cv.COLOR_BGR2GRAY)
                     # обеспечивем контраст для изображения
                     image = cv.createCLAHE(clipLimit=3., tileGridSize=(8, 8)).apply(image)
                     cashed_frames[tag].append([image, dhash(image)])
@@ -37,8 +38,15 @@ def init_data():
                     break
     for tag in cashed_frames.keys():
         print(f"{tag}:{len(cashed_frames[tag])}")
+    print(cashed_frames)
 
-def gen_data_update(updated_dikt, update_procent):
-    print("loh")
+def gen_data_update(updated_dict, update_procent):
+    for tag in updated_dict.keys():
+        for i in range(int(len(updated_dict) * update_procent)):
+            random_tag = random.choice(updated_dict[tag])
+            print(random_tag)
+            random_vall = random.choice(cashed_frames[tag])
+
 
 init_data()
+gen_data_update(cashed_frames, 0.2)
