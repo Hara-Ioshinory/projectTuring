@@ -10,31 +10,86 @@
     <Window.DataContext>
         <vm:MonitorWindowVM/>
     </Window.DataContext>
-    
+
     <Grid Margin="12">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="360"/>
         </Grid.ColumnDefinitions>
-        
-        <!-- Раздел разметки файлов -->
+
+        <!-- Раздел разметки видео -->
         <Border BorderBrush="{StaticResource GrayB}"
                 BorderThickness="1" Margin="0 0 12 0">
             <TextBlock Background="{StaticResource WhiteB}"
                        Foreground="{StaticResource GrayB}"
-                       Text="Файловый менеджер"
+                       Text="Редактор выборки"
                        Margin="5 -12 0 0" Padding="2"
                        HorizontalAlignment="Left"/>
         </Border>
 
-        <!-- Раздел менеджера событий -->
-        <Border BorderBrush="{StaticResource GrayB}"
-                BorderThickness="1" Grid.Column="1">
-            <TextBlock Background="{StaticResource WhiteB}"
-                       Foreground="{StaticResource GrayB}"
-                       Text="Редактор событий"
-                       Margin="5 -12 0 0" Padding="2"
-                       HorizontalAlignment="Left"/>
-        </Border>
+        <!-- Раздел обработки событий -->
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <!-- Окно событий -->
+            <Border BorderBrush="{StaticResource GrayB}"
+                    BorderThickness="1" Margin="0 0 0 12">
+                <Grid>
+                    <TextBlock Background="{StaticResource WhiteB}"
+                           Foreground="{StaticResource GrayB}"
+                           Text="Менеджер событий"
+                           Margin="5 -12 0 0" Padding="2"
+                           HorizontalAlignment="Left"/>
+
+                    <Grid Margin="6">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
+
+                        <!-- Список созданных событий -->
+                        <ListView>
+
+                        </ListView>
+
+                        <!-- Кнопка создания события -->
+                        <Button Grid.Row="1" Height="32" Content="Добавить событие"/>
+                    </Grid>
+                </Grid>
+            </Border>
+
+            <!-- Окно файлов -->
+            <Border BorderBrush="{StaticResource GrayB}"
+                    BorderThickness="1" Grid.Row="1">
+                <Grid>
+                    <TextBlock Background="{StaticResource WhiteB}"
+                               Foreground="{StaticResource GrayB}"
+                               Text="Менеджер файлов"
+                               Margin="5 -12 0 0" Padding="2"
+                               HorizontalAlignment="Left"/>
+
+                    <Grid Margin="6">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
+
+                        <!-- Список добавленных файлов -->
+                        <ListView>
+                            
+                        </ListView>
+
+                        <!-- Кнопка добавления файлов -->
+                        <Button Grid.Row="1" Height="32" Content="Добавить файл"
+                                Command="{Binding OpenFileCMD}"/>
+                    </Grid>
+                </Grid>
+            </Border>
+            
+        </Grid>
+        <Frame></Frame>
     </Grid>
 </Window>

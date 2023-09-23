@@ -15,7 +15,16 @@
     
     <Color x:Key="RedDC">#D80032</Color>
     <SolidColorBrush x:Key="RedDB" Color="{StaticResource RedDC}"/>
-    
-    
+
+    <Style TargetType="Button">
+        <Setter Property="Background" Value="{x:Null}"/>
+        <Setter Property="Foreground" Value="{StaticResource BlackB}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource BlackB}"/>
+    </Style>
+
+    <Style TargetType="ListView">
+        <Setter Property="Background" Value="{x:Null}"/>
+        <Setter Property="BorderThickness" Value="0"/>
+    </Style>
 
 </ResourceDictionary>
