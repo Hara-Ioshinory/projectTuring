@@ -11,7 +11,30 @@
         <vm:MonitorWindowVM/>
     </Window.DataContext>
     
-    <Grid>
+    <Grid Margin="12">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="360"/>
+        </Grid.ColumnDefinitions>
         
+        <!-- Раздел разметки файлов -->
+        <Border BorderBrush="{StaticResource GrayB}"
+                BorderThickness="1" Margin="0 0 12 0">
+            <TextBlock Background="{StaticResource WhiteB}"
+                       Foreground="{StaticResource GrayB}"
+                       Text="Файловый менеджер"
+                       Margin="5 -12 0 0" Padding="2"
+                       HorizontalAlignment="Left"/>
+        </Border>
+
+        <!-- Раздел менеджера событий -->
+        <Border BorderBrush="{StaticResource GrayB}"
+                BorderThickness="1" Grid.Column="1">
+            <TextBlock Background="{StaticResource WhiteB}"
+                       Foreground="{StaticResource GrayB}"
+                       Text="Редактор событий"
+                       Margin="5 -12 0 0" Padding="2"
+                       HorizontalAlignment="Left"/>
+        </Border>
     </Grid>
 </Window>

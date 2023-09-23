@@ -5,16 +5,16 @@
     <SolidColorBrush x:Key="WhiteB" Color="{StaticResource WhiteC}"/>
 
     <Color x:Key="GrayC">#A499B3</Color>
-    <SolidColorBrush x:Key="GrayB" Color="{StaticResource WhiteC}"/>
+    <SolidColorBrush x:Key="GrayB" Color="{StaticResource GrayC}"/>
 
     <Color x:Key="BlackC">#2B2D42</Color>
-    <SolidColorBrush x:Key="BlackB" Color="{StaticResource WhiteC}"/>
+    <SolidColorBrush x:Key="BlackB" Color="{StaticResource BlackC}"/>
 
     <Color x:Key="RedLC">#EF233C</Color>
-    <SolidColorBrush x:Key="RedLB" Color="{StaticResource WhiteC}"/>
+    <SolidColorBrush x:Key="RedLB" Color="{StaticResource RedLC}"/>
     
     <Color x:Key="RedDC">#D80032</Color>
-    <SolidColorBrush x:Key="RedDB" Color="{StaticResource WhiteC}"/>
+    <SolidColorBrush x:Key="RedDB" Color="{StaticResource RedDC}"/>
     
     
 
