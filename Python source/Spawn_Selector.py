@@ -51,8 +51,7 @@ model.compile(optimizer='adam', loss=tf.keras.losses.SparseCategoricalCrossentro
 model.summary()
 
 
-hist = model.fit(train_ds, epochs=1, validation_data=val_ds,
-                 steps_per_epoch=256)
+hist = model.fit(train_ds, epochs=10, validation_data=val_ds)
 
 
 def predict_data():
