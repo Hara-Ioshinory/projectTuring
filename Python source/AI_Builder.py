@@ -1,26 +1,27 @@
-import cv2
 import tensorflow as tf
 from tensorflow import keras
 from keras.models import Sequential
-from keras.layers import Conv2D, MaxPooling2D, Dense, Flatten, Dropout
-
+from keras.layers import Conv2D, MaxPooling2D, Dense, Flatten, Dropout, Rescaling
 import numpy as np
 
-
 def create_a_Model():
-    model = Sequential()
+    img_height = 480
+    img_width = 480
+    batch_size = 32
 
     model = Sequential()
-    model.add(Conv2D(8, (3, 3), 1, activation='relu', input_shape=(256, 256, 3)))
+    model.add(Rescaling(1. / 255, input_shape=(img_height, img_width, 3))),
+    model.add(Conv2D(8, (3, 3), 1, activation='relu', padding='same', input_shape=(256, 256, 3)))
     model.add(MaxPooling2D())
-    model.add(Conv2D(16, (3, 3), 1, activation='relu'))
+    model.add(Conv2D(16, (3, 3), 1, activation='relu', padding='same'))
     model.add(MaxPooling2D())
-    model.add(Conv2D(8, (3, 3), 1, activation='relu'))
+    model.add(Conv2D(8, (3, 3), 1, activation='relu', padding='same'))
     model.add(MaxPooling2D())
+    model.add(Dense(12, activation='relu'))
     model.add(Flatten())
-    model.add(Dense(2, activation='relu'))
-    model.add(Dense(1, activation='sigmoid'))
-    model.compile('adam', loss=tf.losses.BinaryCrossentropy(), metrics=['accuracy'])
+    model.add(Dense(len(class_names)))
+    model.compile(optimizer='adam', loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
+                  metrics=['accuracy'])
     model.summary()
 
 def load_model(modelSRC):

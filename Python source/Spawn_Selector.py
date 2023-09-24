@@ -2,11 +2,8 @@ import tensorflow as tf
 from tensorflow import keras
 from keras.models import Sequential
 from keras.layers import Conv2D, MaxPooling2D, Dense, Flatten, Dropout, Rescaling
-from keras.metrics import Precision, Recall, BinaryAccuracy
-
 import numpy as np
-import cv2
-from matplotlib import pyplot as plt
+
 
 data_dir = "result"
 
@@ -32,10 +29,11 @@ val_ds = tf.keras.utils.image_dataset_from_directory(
 
 class_names = train_ds.class_names
 
-# AUTOTUNE = tf.data.AUTOTUNE
-#
-# train_ds = train_ds.cache().shuffle(1000).prefetch(buffer_size=AUTOTUNE)
-# val_ds = val_ds.cache().prefetch(buffer_size=AUTOTUNE)
+
+AUTOTUNE = tf.data.AUTOTUNE
+
+train_ds = train_ds.cache().shuffle(1000).prefetch(buffer_size=AUTOTUNE)
+val_ds = val_ds.cache().prefetch(buffer_size=AUTOTUNE)
 
 model = Sequential()
 model.add(Rescaling(1./255, input_shape=(img_height, img_width, 3))),
