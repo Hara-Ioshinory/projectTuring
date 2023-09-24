@@ -1,17 +1,22 @@
 import os, cv2, datetime, csv, random
 
+
 #загружаем модель
 camp_ratio, directory = 10, "source"
+event_count = False
 
 
 def alarm_activate(alarm_type, new_activate):
-    if 0.5 > new_activate:
+    global event_count
+    if 0.5 > new_activate and event_count:
+        event_count = False
         print(f'Конец события: {alarm_type}, в {datetime.datetime.now()}')
         with open('logs.csv', 'a', newline='') as csvfile:
             spamwriter = csv.writer(csvfile, delimiter=';',
                                     quotechar='|', quoting=csv.QUOTE_MINIMAL)
             spamwriter.writerow(['Конец события', alarm_type, datetime.datetime.now()])
-    elif 0.5 <= new_activate:
+    elif 0.5 <= new_activate and not event_count:
+        event_count = True
         print(f'Начало событие: {alarm_type}, в {datetime.datetime.now()}')
         with open('logs.csv', 'a', newline='') as csvfile:
             spamwriter = csv.writer(csvfile, delimiter=';',
